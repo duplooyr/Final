@@ -44,27 +44,40 @@ def choices(i):
         print annual_income[i]
 
 
+
 # SEARCH ID
 def search_id(i_id):
     inputed_id = str(i_id)
-    
     for i in range(0, len(id_number)):
         if id_number[i] == inputed_id:
             choices(i)
+# SEARCH ID
+def search_fname(i_name):
+    inputed_name = str(i_name)
+    for i in range(0, len(first_name)):
+        if first_name[i] == inputed_name:
+            choices(i)
 
             
-# PROMPT
-def prompt():
+# ID PROMPT
+def id_prompt():
     x = input("Which ID would you like to search for? ")
     print(chr(27) + "[2J")
     search_id(x) 
+# FIST NAME PROMPT
+def first_name_prompt():
+    x = input("Which first name would you like to search for? ")
+    print(chr(27) + "[2J")
+    search_fname(x) 
 
 
 #MAIN FUNCTION
 def main():
     print "Welcome which function would you like to use?"
-    if raw_input("> ").lower() == "search_id":
-        prompt(id)
-
+    inputed = raw_input("> ").lower()
+    if inputed == "search_id":
+        id_prompt()
+    elif inputed == "search_fname":
+        first_name_prompt()
 
 main()
