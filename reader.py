@@ -50,17 +50,17 @@ def choices(i):
     print "6) Annual Income" + bcolors.ENDC
     choice = input("> ")
     if choice == 1:
-        print id_number[i], first_name[i], last_name[i], email[i], department[i], annual_income[i]
+        print bcolors.HEADER + bcolors.BOLD + id_number[i] + bcolors.ENDC + bcolors.BOLD, first_name[i], last_name[i], email[i], department[i], annual_income[i] + bcolors.ENDC
     elif choice == 2:
-        print first_name[i]
+        print bcolors.BOLD + first_name[i] + bcolors.ENDC
     elif choice == 3:
-        print last_name[i]
+        print bcolors.BOLD + last_name[i] + bcolors.ENDC
     elif choice == 4:
-        print email[i]
+        print bcolors.BOLD + email[i] + bcolors.ENDC
     elif choice == 5:
-        print department[i]
+        print bcolors.BOLD + department[i] + bcolors.ENDC
     elif choice == 6:
-        print annual_income[i]
+        print bcolors.BOLD + annual_income[i] + bcolors.ENDC
 
 def choices_searches():
     print bcolors.HEADER + bcolors.BOLD + "Would you like to search by?" + bcolors.ENDC
@@ -78,12 +78,12 @@ def beginning_choices():
     print "3) Graph Data"
     print "4) Print Data" + bcolors.ENDC
 def sort_choices():
-    print "How would you like to sort the data?"
-    print "1) ID High to Low"
+    print bcolors.HEADER + bcolors.BOLD + "How would you like to sort the data?"  + bcolors.ENDC
+    print bcolors.BOLD + "1) ID High to Low"
     print "2) Alphabetical First Name"
     print "3) Alphabetical Last Name"
     print "4) Income High to Low"
-    print "5) Income Low to High"
+    print "5) Income Low to High" + bcolors.ENDC
 #////////////////////////////////////////////////////////////////////////////////////////////////  
 # SEARCH ID
 def search_id(i_id):
@@ -131,36 +131,36 @@ def search_income(i_name):
 #////////////////////////////////////////////////////////////////////////////////////////////////       
 # ID PROMPT
 def id_prompt():
-    x = input("Which ID would you like to search for? ")
+    x = input(bcolors.HEADER + bcolors.BOLD +"Which ID would you like to search for? " + bcolors.ENDC)
     print(chr(27) + "[2J")
     search_id(x) 
 # FIST NAME PROMPT
 def first_name_prompt():
-    x = raw_input("Which first name would you like to search for? ").title()
+    x = raw_input(bcolors.HEADER + bcolors.BOLD +"Which first name would you like to search for? " + bcolors.ENDC).title()
     print(chr(27) + "[2J")
     search_fname(x) 
 # LAST NAME PROMPT
 def last_name_prompt():
-    x = raw_input("Which last name would you like to search for? ").title()
+    x = raw_input(bcolors.HEADER + bcolors.BOLD +"Which last name would you like to search for? " + bcolors.ENDC).title()
     print(chr(27) + "[2J")
     search_lname(x) 
 # EMAIL PROMPT
 def email_prompt():
-    x = raw_input("Which email would you like to search for? ")
+    x = raw_input(bcolors.HEADER + bcolors.BOLD +"Which email would you like to search for? " + bcolors.ENDC)
     print(chr(27) + "[2J")
     search_email(x) 
 # DEPARTMENT PROMPT
 def department_prompt():
-    x = raw_input("Which department would you like to search for? ").title()
+    x = raw_input(bcolors.HEADER + bcolors.BOLD +"Which department would you like to search for? " + bcolors.ENDC).title()
     print(chr(27) + "[2J")
     search_department(x) 
 # INCOME PROMPT
 def income_prompt():
-    x = raw_input("How much income would you like to search for? ")
+    x = raw_input(bcolors.HEADER + bcolors.BOLD +"How much income would you like to search for? " + bcolors.ENDC)
     print(chr(27) + "[2J")
     search_income(x) 
 def finished_prompt():
-    print "\n\nDo you have everything you need? (Y/N)"
+    print bcolors.HEADER + bcolors.BOLD +"\n\nDo you have everything you need? (Y/N)" + bcolors.ENDC
     x = raw_input("> ").title()
     if x == "N":
         main()
@@ -226,4 +226,5 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+    
 main()
