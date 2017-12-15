@@ -205,9 +205,37 @@ def id_h_l():
     n_a = annual_income[::-1]
     for i in range(0,len(n_ids)):
         print bcolors.OKGREEN + n_ids[i] + bcolors.ENDC, bcolors.BOLD + n_f[i], n_l[i], n_e[i], n_d[i], n_a[i] + bcolors.ENDC
+    finished_prompt()
+
 
 def alp_first():
-    print "a"
+    new_list = first_name
+    new_list.sort()
+    print new_list
+    finished_prompt()
+
+
+def alp_last():
+    new_list = last_name
+    new_list.sort()
+    print new_list
+    finished_prompt()
+
+
+def inc_h_l():
+    new_list = ""
+    finished = ""
+    new_income = str(annual_income)
+    new_new_income = ''.join(new_income)
+    for i in range(0,len(new_new_income)):
+        if new_new_income[i] == "$":
+            finished += ""
+        else:
+            finished += new_new_income[i]
+    finished = finished
+        
+    
+    
 
 
 
