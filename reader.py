@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-import sys
-from collections import Counter
+import plotly
+import plotly.graph_objs as go
 
 data = open("Businesses.csv", 'r')
 lines = data.readlines()
@@ -33,6 +33,7 @@ def main():
         sort_functions()
     elif x == 3:
         print(chr(27) + "[2J")
+        graph_functions()
         
     elif x == 4:
         for i in range (0,len(id_number)):
@@ -84,6 +85,10 @@ def sort_choices():
     print "3) Alphabetical Last Name"
     print "4) Income High to Low"
     print "5) Income Low to High" + bcolors.ENDC
+def graph_choices():
+    print bcolors.HEADER + bcolors.BOLD + "How would you like to graph your data?"  + bcolors.ENDC
+    print bcolors.BOLD + "1) Income high to low with department"
+    print "2) Income low to high with department" + bcolors.ENDC
 #////////////////////////////////////////////////////////////////////////////////////////////////  
 # SEARCH ID
 def search_id(i_id):
@@ -161,7 +166,7 @@ def income_prompt():
     search_income(x) 
 def finished_prompt():
     print bcolors.HEADER + bcolors.BOLD +"\n\nDo you have everything you need? (Y/N)" + bcolors.ENDC
-    x = raw_input("> ").title()
+    x = raw_input(bcolors.FAIL + "> " + bcolors.ENDC).title()
     if x == "N":
         main()
 #////////////////////////////////////////////////////////////////////////////////////////////////     
@@ -194,9 +199,17 @@ def sort_functions():
         inc_h_l()
     elif x == 5:
         inc_l_h()
+
+def graph_functions():
+    graph_choices()
+    x = input("> ")
+    if x == 1:
+        g_1()
+    elif x == 2:
+        g_2()
+    finished_prompt()
  
 def id_h_l():
-    new_list = ""
     n_ids = id_number[::-1]
     n_f = first_name[::-1]
     n_l = last_name[::-1]
@@ -211,39 +224,67 @@ def id_h_l():
 def alp_first():
     new_list = first_name
     new_list.sort()
-    print new_list
+    for i in range(0,len(first_name)):
+        print bcolors.OKGREEN + new_list[i] + bcolors.ENDC
     finished_prompt()
 
 
 def alp_last():
     new_list = last_name
     new_list.sort()
-    print new_list
+    for i in range(0,len(last_name)):
+        print bcolors.OKGREEN + new_list[i] + bcolors.ENDC
     finished_prompt()
 
-
 def inc_h_l():
-    new_list = ""
-    finished = ""
-    new_income = str(annual_income)
-    new_new_income = ''.join(new_income)
-    for i in range(0,len(new_new_income)):
-        if new_new_income[i] == "$":
-            finished += ""
-        else:
-            finished += new_new_income[i]
-    finished = finished
-        
+    x = annual_income
+    x = map(float,x)
+    x.sort(reverse=True)
+    for i in range(0,len(annual_income)):
+        print bcolors.BOLD + str(x[i]) + bcolors.ENDC
+    finished_prompt()
+
+def inc_l_h():
+    x = annual_income
+    x = map(float,x)
+    x.sort()
+    for i in range(0,len(annual_income)):
+        print bcolors.BOLD + str(x[i]) + bcolors.ENDC
+    finished_prompt()
+#////////////////////////////////////////////////////////////////////////////////////////////////  
+def g_1():
+    graph_store_type = department
+    graph_income = annual_income
     
+    graph_store_type = map(str, graph_store_type)
+    graph_store_type.sort()
+
+    graph_income = map(float,graph_income)
+    graph_income.sort(reverse=True)
+
+
+    data = [go.Bar(
+        x = graph_store_type,
+        y = graph_income
+    )]
+    plotly.offline.plot(data, filename='graph.html')
+
+def g_2():
+    graph_store_type = department
+    graph_income = annual_income
     
+    graph_store_type = map(str, graph_store_type)
+    graph_store_type.sort(reverse=True)
+
+    graph_income = map(float,graph_income)
+    graph_income.sort()
 
 
-
-
-
-
-
-
+    data = [go.Bar(
+        x = graph_store_type,
+        y = graph_income
+    )]
+    plotly.offline.plot(data, filename='graph.html')
 #////////////////////////////////////////////////////////////////////////////////////////////////  
 class bcolors:
     HEADER = '\033[95m'
