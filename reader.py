@@ -34,11 +34,12 @@ def main():
     elif x == 3:
         print(chr(27) + "[2J")
         graph_functions()
-        
     elif x == 4:
         for i in range (0,len(id_number)):
             print bcolors.OKGREEN + id_number[i] + bcolors.ENDC, bcolors.BOLD + first_name[i], last_name[i], email[i], department[i], annual_income[i] + bcolors.ENDC
         finished_prompt()
+    else:
+        main()
 
 #//////////////////////////////////////////////////////////////////////////////////////////////// 
 def choices(i):
@@ -62,6 +63,9 @@ def choices(i):
         print bcolors.BOLD + department[i] + bcolors.ENDC
     elif choice == 6:
         print bcolors.BOLD + annual_income[i] + bcolors.ENDC
+    else:
+        print(chr(27) + "[2J")
+        choices(i)
 
 def choices_searches():
     print bcolors.HEADER + bcolors.BOLD + "Would you like to search by?" + bcolors.ENDC
@@ -185,6 +189,9 @@ def search_functions():
         department_prompt()
     elif inputed == 6:
         income_prompt()
+    else:
+        print(chr(27) + "[2J")
+        search_functions()
 
 def sort_functions():
     sort_choices()
@@ -199,6 +206,9 @@ def sort_functions():
         inc_h_l()
     elif x == 5:
         inc_l_h()
+    else:
+        print(chr(27) + "[2J")
+        sort_functions()
 
 def graph_functions():
     graph_choices()
