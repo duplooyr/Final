@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import plotly
 import plotly.graph_objs as go
+import sys
 
 data = open("Businesses.csv", 'r')
 lines = data.readlines()
+
 
 id_number = []
 first_name = []
@@ -18,27 +20,29 @@ for i in range(1, len(lines)):
     last_name.append(info[2])
     email.append(info[3])
     department.append(info[4])
-    annual_income.append(info[5])
+    annual_income.append(info[5]) 
 #////////////////////////////////////////////////////////////////////////////////////////////////  
 #MAIN FUNCTION
 def main():
     print(chr(27) + "[2J")
     beginning_choices()
-    x = input("> ")
-    if x == 1:
+    x = raw_input("> ")
+    if x == "1":
         print(chr(27) + "[2J")
         search_functions()
-    elif x == 2:
+    elif x == "2":
         print(chr(27) + "[2J")
         sort_functions()
-    elif x == 3:
+    elif x == "3":
         print(chr(27) + "[2J")
         graph_functions()
-    elif x == 4:
+    elif x == "4":
         for i in range (0,len(id_number)):
             print bcolors.OKGREEN + id_number[i] + bcolors.ENDC, bcolors.BOLD + first_name[i], last_name[i], email[i], department[i], annual_income[i] + bcolors.ENDC
         finished_prompt()
-    else:
+    elif x != "1" or "2" or "3" or "4":
+        main()
+    elif x.isalpha() or len(x) > 1:
         main()
 
 #//////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -94,6 +98,7 @@ def graph_choices():
     print bcolors.BOLD + "1) Income high to low with department"
     print "2) Income low to high with department" + bcolors.ENDC
 #////////////////////////////////////////////////////////////////////////////////////////////////  
+
 # SEARCH ID
 def search_id(i_id):
     inputed_id = str(i_id)
@@ -138,6 +143,7 @@ def search_income(i_name):
     finished_prompt()
 
 #////////////////////////////////////////////////////////////////////////////////////////////////       
+
 # ID PROMPT
 def id_prompt():
     x = input(bcolors.HEADER + bcolors.BOLD +"Which ID would you like to search for? " + bcolors.ENDC)
@@ -168,12 +174,17 @@ def income_prompt():
     x = raw_input(bcolors.HEADER + bcolors.BOLD +"How much income would you like to search for? " + bcolors.ENDC)
     print(chr(27) + "[2J")
     search_income(x) 
+#FINISHED PROMPT
 def finished_prompt():
     print bcolors.HEADER + bcolors.BOLD +"\n\nDo you have everything you need? (Y/N)" + bcolors.ENDC
     x = raw_input(bcolors.FAIL + "> " + bcolors.ENDC).title()
     if x == "N":
         main()
+    else:
+        sys.exit()
+
 #////////////////////////////////////////////////////////////////////////////////////////////////     
+
 def search_functions():
     choices_searches()
     inputed = input("> ")
