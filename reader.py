@@ -3,49 +3,64 @@ import plotly
 import plotly.graph_objs as go
 import sys
 
-data = open("Businesses.csv", 'r')
+#file_open = raw_input("What CSV file would you like to open? ") + ".csv"
+file_open = ("Businesses.csv")
+data = open(file_open, 'r')
 lines = data.readlines()
 
+col_data = []
+for row_count in range(0, len(lines)):
+    info = lines[row_count].rstrip().split(",")
+    col_data += [info]
 
-id_number = []
-first_name = []
-last_name = []
-email = []
-department = []
-annual_income = []
-for i in range(1, len(lines)):
-    info = lines[i].rstrip().split(",")
-    id_number.append(info[0])
-    first_name.append(info[1])
-    last_name.append(info[2])
-    email.append(info[3])
-    department.append(info[4])
-    annual_income.append(info[5]) 
+row_len = len(lines)
+first_row = col_data[[0][0]]
+
+
+    
+    
 #////////////////////////////////////////////////////////////////////////////////////////////////  
-#MAIN FUNCTION
-def main():
+#                                        ABSTRACTED FUNCTIONS
+#//////////////////////////////////////////////////////////////////////////////////////////////// 
+
+def fail_option():
+    escape()
+    print ("\n")
+    print bcolors.WARNING + ("Please pick a valid option.") + bcolors.ENDC
+    print ("\n")
+
+def escape():
     print(chr(27) + "[2J")
+
+def main():
+    escape()
     beginning_choices()
     x = raw_input("> ")
     if x == "1":
-        print(chr(27) + "[2J")
+        escape()
         search_functions()
     elif x == "2":
-        print(chr(27) + "[2J")
+        escape()
         sort_functions()
     elif x == "3":
-        print(chr(27) + "[2J")
+        escape()
         graph_functions()
     elif x == "4":
-        for i in range (0,len(id_number)):
-            print bcolors.OKGREEN + id_number[i] + bcolors.ENDC, bcolors.BOLD + first_name[i], last_name[i], email[i], department[i], annual_income[i] + bcolors.ENDC
+        new = str(col_data)
+        new = new.rstrip().split(",")
+        print new 
         finished_prompt()
-    elif x != "1" or "2" or "3" or "4":
+    elif x.lower == "exit" or x == "exit":
+        sys.exit()
+    elif x != "1" or "2" or "3" or "4" or "exit":
         main()
     elif x.isalpha() or len(x) > 1:
         main()
 
 #//////////////////////////////////////////////////////////////////////////////////////////////// 
+#                                       CHOICES
+#//////////////////////////////////////////////////////////////////////////////////////////////// 
+
 def choices(i):
     print bcolors.HEADER + bcolors.BOLD + "Record found which information would you like?" + bcolors.ENDC
     print bcolors.BOLD + "1) All"
@@ -68,17 +83,11 @@ def choices(i):
     elif choice == 6:
         print bcolors.BOLD + annual_income[i] + bcolors.ENDC
     else:
-        print(chr(27) + "[2J")
+        escape()
         choices(i)
 
 def choices_searches():
-    print bcolors.HEADER + bcolors.BOLD + "Would you like to search by?" + bcolors.ENDC
-    print bcolors.BOLD + "1) Search by ID"
-    print "2) Search by First Name"
-    print "3) Search by Last Name"
-    print "4) Search by Email"
-    print "5) Search by Department"
-    print "6) Search by Annual Income" + bcolors.ENDC
+    print bcolors.HEADER + bcolors.BOLD + "What column would you like to search for?" + bcolors.ENDC
 
 def beginning_choices():
     print bcolors.HEADER + bcolors.BOLD + "Welcome, which function would you like to use?" + bcolors.ENDC
@@ -97,83 +106,11 @@ def graph_choices():
     print bcolors.HEADER + bcolors.BOLD + "How would you like to graph your data?"  + bcolors.ENDC
     print bcolors.BOLD + "1) Income high to low with department"
     print "2) Income low to high with department" + bcolors.ENDC
-#////////////////////////////////////////////////////////////////////////////////////////////////  
-
-# SEARCH ID
-def search_id(i_id):
-    inputed_id = str(i_id)
-    for i in range(0, len(id_number)):
-        if id_number[i] == inputed_id:
-            choices(i)
-    finished_prompt()
-# SEARCH FIRST NAME
-def search_fname(i_name):
-    inputed_name = str(i_name)
-    for i in range(0, len(first_name)):
-        if first_name[i] == inputed_name:
-            choices(i)
-    finished_prompt()
-# SEARCH LAST NAME
-def search_lname(i_name):
-    inputed_name = str(i_name)
-    for i in range(0, len(last_name)):
-        if last_name[i] == inputed_name:
-            choices(i)
-    finished_prompt()
-# SEARCH EMAIL
-def search_email(i_name):
-    inputed_name = str(i_name)
-    for i in range(0, len(email)):
-        if email[i] == inputed_name:
-            choices(i)
-    finished_prompt()
-# DEPARTMENT EMAIL
-def search_department(i_name):
-    inputed_name = str(i_name)
-    for i in range(0, len(department)):
-        if department[i] == inputed_name:
-            choices(i)
-    finished_prompt()
-# INCOME EMAIL
-def search_income(i_name):
-    inputed_name = str(i_name)
-    for i in range(0, len(annual_income)):
-        if annual_income[i] == inputed_name:
-            choices(i)
-    finished_prompt()
 
 #////////////////////////////////////////////////////////////////////////////////////////////////       
+#                                           PROMPTS
+#//////////////////////////////////////////////////////////////////////////////////////////////// 
 
-# ID PROMPT
-def id_prompt():
-    x = input(bcolors.HEADER + bcolors.BOLD +"Which ID would you like to search for? " + bcolors.ENDC)
-    print(chr(27) + "[2J")
-    search_id(x) 
-# FIST NAME PROMPT
-def first_name_prompt():
-    x = raw_input(bcolors.HEADER + bcolors.BOLD +"Which first name would you like to search for? " + bcolors.ENDC).title()
-    print(chr(27) + "[2J")
-    search_fname(x) 
-# LAST NAME PROMPT
-def last_name_prompt():
-    x = raw_input(bcolors.HEADER + bcolors.BOLD +"Which last name would you like to search for? " + bcolors.ENDC).title()
-    print(chr(27) + "[2J")
-    search_lname(x) 
-# EMAIL PROMPT
-def email_prompt():
-    x = raw_input(bcolors.HEADER + bcolors.BOLD +"Which email would you like to search for? " + bcolors.ENDC)
-    print(chr(27) + "[2J")
-    search_email(x) 
-# DEPARTMENT PROMPT
-def department_prompt():
-    x = raw_input(bcolors.HEADER + bcolors.BOLD +"Which department would you like to search for? " + bcolors.ENDC).title()
-    print(chr(27) + "[2J")
-    search_department(x) 
-# INCOME PROMPT
-def income_prompt():
-    x = raw_input(bcolors.HEADER + bcolors.BOLD +"How much income would you like to search for? " + bcolors.ENDC)
-    print(chr(27) + "[2J")
-    search_income(x) 
 #FINISHED PROMPT
 def finished_prompt():
     print bcolors.HEADER + bcolors.BOLD +"\n\nDo you have everything you need? (Y/N)" + bcolors.ENDC
@@ -183,25 +120,51 @@ def finished_prompt():
     else:
         sys.exit()
 
-#////////////////////////////////////////////////////////////////////////////////////////////////     
+#////////////////////////////////////////////////////////////////////////////////////////////////  
+#                                       SEARCH FUNCTIONS
+#//////////////////////////////////////////////////////////////////////////////////////////////// 
+
+def search_f(inputed):
+    row_number = input("Row #? ")
+    found_row = col_data[row_number]
+    print ("\n") 
+    print bcolors.BOLD + found_row[inputed] + bcolors.ENDC
+    finished_prompt()
+
+#////////////////////////////////////////////////////////////////////////////////////////////////
+#                                   FUNCTIONS
+#////////////////////////////////////////////////////////////////////////////////////////////////      
 
 def search_functions():
-    choices_searches()
+    print bcolors.BOLD + bcolors.HEADER + ("Would you like all data or one column?") + bcolors.ENDC
+    print bcolors.BOLD + ("1.) One Column") + bcolors.ENDC
+    print bcolors.BOLD + ("2.) All Data") + bcolors.ENDC
+
     inputed = input("> ")
+
     if inputed == 1:
-        id_prompt()
-    elif inputed == 2:
-        first_name_prompt()
-    elif inputed == 3:
-        last_name_prompt()
-    elif inputed == 4:
-        email_prompt()
-    elif inputed == 5:
-        department_prompt()
-    elif inputed == 6:
-        income_prompt()
+        choices_searches()
+        inputed = input("> ")
+
+        if inputed <= len(first_row): 
+            column_name = first_row[inputed]
+            print ("You wish to search for %s?") % column_name
+            y_n = raw_input("(Y/N)? ").lower()
+
+            if y_n == "y":
+                search_f(inputed)
+
+            elif y_n == "n":
+                search_functions()
+            
+            else:
+                fail_option()
+                search_functions()
+        else:
+            fail_option()
+            search_functions()
     else:
-        print(chr(27) + "[2J")
+        fail_option()
         search_functions()
 
 def sort_functions():
@@ -218,7 +181,7 @@ def sort_functions():
     elif x == 5:
         inc_l_h()
     else:
-        print(chr(27) + "[2J")
+        escape()
         sort_functions()
 
 def graph_functions():
@@ -229,7 +192,11 @@ def graph_functions():
     elif x == 2:
         g_2()
     finished_prompt()
- 
+
+#////////////////////////////////////////////////////////////////////////////////////////////////      
+#                                 SORT OPTIONS
+#////////////////////////////////////////////////////////////////////////////////////////////////      
+
 def id_h_l():
     n_ids = id_number[::-1]
     n_f = first_name[::-1]
@@ -272,7 +239,11 @@ def inc_l_h():
     for i in range(0,len(annual_income)):
         print bcolors.BOLD + str(x[i]) + bcolors.ENDC
     finished_prompt()
+
 #////////////////////////////////////////////////////////////////////////////////////////////////  
+#                                   GRAPH TYPES
+#////////////////////////////////////////////////////////////////////////////////////////////////      
+
 def g_1():
     graph_store_type = department
     graph_income = annual_income
@@ -306,7 +277,11 @@ def g_2():
         y = graph_income
     )]
     plotly.offline.plot(data, filename='graph.html')
+
 #////////////////////////////////////////////////////////////////////////////////////////////////  
+#                               TEXT COLORING
+#////////////////////////////////////////////////////////////////////////////////////////////////      
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
