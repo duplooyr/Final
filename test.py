@@ -1,6 +1,7 @@
-row = ['a']
-row += ['b']
-row += ['c']
+
+row = ['aaa']
+row += ['bbb']
+row += ['ccc']
 
 col = [row]
 
